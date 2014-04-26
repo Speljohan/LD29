@@ -17,21 +17,24 @@ public class AI : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         this.controller = GetComponent<CharacterController>();
-        //controller.radius = 0;
-        //controller.height = 0;
+        //controller.radius = 1;
+        //controller.height = 1;
         this.transform = GetComponent<Transform>();
         this.nodes = new List<GameObject>();
         nodes.AddRange(GameObject.FindGameObjectsWithTag("MovementNode"));
         int targetNode = Random.Range(0, nodes.Count);
         this.destination = DirToVector(NextNode(nodes[targetNode].GetComponent<NodeRule>())).normalized;
-        transform.position = destination;
+        this.transform.position = destination;
+        
 
 
     }
 
-    void OnControllerColliderHit(ControllerColliderHit hit)
+    void NewTarget()
     {
-        Debug.Log(hit.gameObject.ToString());
+        //transform.position = destination;
+        destination = DirToVector(NextNode(nodes[Random.Range(0, nodes.Count)].GetComponent<NodeRule>())).normalized;
+        Debug.Log("NEW: " + destination);
     }
 
     public int NextNode(NodeRule rule)
@@ -77,21 +80,11 @@ public class AI : MonoBehaviour {
 
     public void Update()
     {
-        double dst = ((double)(transform.position - destination).magnitude);
-        if (dst < 0.1)
+
+        if (transform.position == lastPosition)
         {
-            //Debug.Log("CHANGED TARGET NODE");
-            transform.position = destination;
-            
-            destination = DirToVector(NextNode(nodes[Random.Range(0, nodes.Count)].GetComponent<NodeRule>())).normalized;
+            controller.Move(new Vector3(destination.x * Time.deltaTime * speed, destination.y * Time.deltaTime * speed, 0));
         }
-        else
-        {
-            if (transform.position == lastPosition)
-            {
-                controller.Move(new Vector3(destination.x * Time.deltaTime * speed, destination.y * Time.deltaTime * speed, 0));
-            }
-            lastPosition = transform.position;
-        }
+        lastPosition = transform.position;
     }
 }

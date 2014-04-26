@@ -1,0 +1,4 @@
+1 Get Alcohol
+2 Drink Alcohol
+3 ???
+4 Profit

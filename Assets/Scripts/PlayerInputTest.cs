@@ -14,6 +14,8 @@ public class PlayerInputTest : MonoBehaviour {
 	void Update () {
 		float x = Input.GetAxis("Horizontal") * moveSpeed * Time.deltaTime;
 		float y = Input.GetAxis("Vertical") * moveSpeed * Time.deltaTime;
+        
+        
 
 		GetComponent<CharacterController>().Move(new Vector3(x, y, 0));
 	}

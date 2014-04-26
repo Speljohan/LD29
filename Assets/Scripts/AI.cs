@@ -9,50 +9,87 @@ public class AI : MonoBehaviour {
 
     public float speed = 2.0f;
 
-    public List<GameObject> nodes = new List<GameObject>();
-    private int currentIndex;
-    private bool finished = false;
+    private List<GameObject> nodes;
 
     private Vector3 lastPosition;
+    private Vector3 destination;
 
 	// Use this for initialization
 	void Start () {
         this.controller = GetComponent<CharacterController>();
-        controller.radius = 0;
-        controller.height = 0;
+        //controller.radius = 0;
+        //controller.height = 0;
         this.transform = GetComponent<Transform>();
-        transform.position = new Vector3(-4f, 0.2f, 1);
-        this.currentIndex = 0;
-        //nodes = new List<GameObject>();
+        this.nodes = new List<GameObject>();
+        nodes.AddRange(GameObject.FindGameObjectsWithTag("MovementNode"));
+        int targetNode = Random.Range(0, nodes.Count);
+        this.destination = DirToVector(NextNode(nodes[targetNode].GetComponent<NodeRule>())).normalized;
+        transform.position = destination;
+
+
     }
 
-    public void Next()
+    void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        currentIndex++;
+        Debug.Log(hit.gameObject.ToString());
+    }
+
+    public int NextNode(NodeRule rule)
+    {
+        int dest = Random.Range(0, 3);
+        switch (dest)
+        {
+            case 0:
+                if (rule.north) return 0;
+                break;
+            case 1:
+                if (rule.west) return 1;
+                break;
+            case 2:
+                if (rule.east) return 2;
+                break;
+            case 3:
+                if (rule.south) return 3;
+                break;
+        }
+        return rule.GetRandomTraversibleNode();
+    }
+
+    public Vector3 DirToVector(int i)
+    {
+        switch (i)
+        {
+            case 0:
+                return new Vector3(0, -1, 0);
+                break;
+            case 1:
+                return new Vector3(-1, 0, 0);
+                break;
+            case 2:
+                return new Vector3(1, 0, 0);
+                break;
+            case 3:
+                return new Vector3(0, 1, 0);
+                break;
+        }
+        return new Vector3(-1, -1, 0);
     }
 
     public void Update()
     {
-        if (currentIndex >= nodes.Count)
+        double dst = ((double)(transform.position - destination).magnitude);
+        if (dst < 0.1)
         {
-            return;
-        }
-
-        GameObject node = nodes[currentIndex];
-
-        Transform targetPosition = node.GetComponent<Transform>();
-
-        if ((transform.position - targetPosition.position).magnitude < 0.1f)
-        {
-            Next();
+            //Debug.Log("CHANGED TARGET NODE");
+            transform.position = destination;
+            
+            destination = DirToVector(NextNode(nodes[Random.Range(0, nodes.Count)].GetComponent<NodeRule>())).normalized;
         }
         else
         {
             if (transform.position == lastPosition)
             {
-                Vector3 direction = (targetPosition.position - transform.position).normalized;
-
-                controller.Move(new Vector3(direction.x * Time.deltaTime * speed, direction.y * Time.deltaTime * speed, 0));
+                controller.Move(new Vector3(destination.x * Time.deltaTime * speed, destination.y * Time.deltaTime * speed, 0));
             }
             lastPosition = transform.position;
         }

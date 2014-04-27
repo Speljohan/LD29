@@ -14,7 +14,7 @@ public class BambScript : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.E))
         {
             
-
+        
 
 
         }
@@ -24,8 +24,13 @@ public class BambScript : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D otherCollider)
     {
-        GameObject go = GameObject.FindGameObjectWithTag("Player");
-        go.GetComponent<PlayerScript>().food++;
-        //Do dialogue "Thanks, your smile makes mer feel real.";
+        if(otherCollider.gameObject.tag == "Player")
+        { 
+           // node = otherCollider.gameObject.GetComponent<NodeRule>();
+            GameObject go = GameObject.FindGameObjectWithTag("Player");
+            go.GetComponent<PlayerScript>().food++;
+            GameObject.FindGameObjectWithTag("Main").GetComponent<DialogueManager>().StartDialogue(DialogueGenerator.GeneratePositive(), gameObject);
+            //Do dialogue "Thanks, your smile makes mer feel real.";
+        }
     }
 }

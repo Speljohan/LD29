@@ -12,6 +12,8 @@ TagManager:
   - GUI
   - Main
   - EnterNode
+  - Player
+  - Bamba
   - 
   Builtin Layer 0: Default
   Builtin Layer 1: TransparentFX

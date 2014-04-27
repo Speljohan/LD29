@@ -50,7 +50,7 @@ public class NodeRule : MonoBehaviour {
         }
 
 
-        int iiiii = Random.Range(0, aL);
+        int iiiii = Random.Range(0, aL-1);
         print("NODE RANDOM FAGGOT " + iiiii);
         return vectors[iiiii];
     }

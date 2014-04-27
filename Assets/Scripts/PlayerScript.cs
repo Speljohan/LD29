@@ -8,6 +8,7 @@ public class PlayerScript : MonoBehaviour {
     public int food = 0;
     public int abstinence = 100;
     public int hunger = 100;
+    private float timeLeft = 120f;
 
     public int timerMax = 1;
     public int abGain = 100;
@@ -34,7 +35,7 @@ public class PlayerScript : MonoBehaviour {
             curTimer -= timerMax;
             abstinence -= abGain;
         }
-        
+        timeLeft -= Time.deltaTime;
 	}
 
     public void eatFood()

@@ -1,29 +1,25 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class AITest : MonoBehaviour {
+public class AITest : MonoBehaviour
+{
 
     private Rigidbody2D controller;
-    public Vector2 speed = new Vector2(1,1);
+    public Vector2 speed = new Vector2(1, 1);
     private Vector2 moveTo = new Vector2(0, 0);
-	// Use this for initialization
-<<<<<<< HEAD
+    // Use this for initialization
     private Vector2 moveDirection = new Vector2(1, 0);
-    private Vector2 nextMoveDirection = new Vector2(0, 0);
-    private bool paused;
-=======
-    public Vector2 moveDirection = new Vector2(1, 0);
     private Vector2 nextMoveDirection = new Vector2(0, 0);
     private bool paused = false;
     private bool hasTouchedNode = false;
->>>>>>> a5175c4ba8aafafe6b3c75e67ccfb6a46120875c
-	void Start () {
+    void Start()
+    {
         this.controller = GetComponent<Rigidbody2D>();
         controller.gravityScale = 0;
         moveDirection = new Vector2(1, 0);
         print(moveDirection.x);
-        
-	}
+
+    }
 
     public void Pause()
     {
@@ -36,11 +32,12 @@ public class AITest : MonoBehaviour {
     }
 
 
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update()
+    {
         print("Hai, AIM A AITEST");
-       // print("OIL");
+        // print("OIL");
         if (hasTouchedNode)
         {
             Vector2 goPos = gameObject.GetComponent<BoxCollider2D>().transform.position;
@@ -75,8 +72,8 @@ public class AITest : MonoBehaviour {
             }
 
         }
-	
-	}
+
+    }
 
     void OnTriggerEnter2D(Collider2D otherCollider)
     {
@@ -91,26 +88,25 @@ public class AITest : MonoBehaviour {
         {
             moveTo = new Vector2(goHBp.x + nodePos.x, goHBp.y);
         }
-                 if (controller.velocity.x == -1 && controller.velocity.y == 0)
+        if (controller.velocity.x == -1 && controller.velocity.y == 0)
         {
             moveTo = new Vector2(goHBp.x - nodePos.x, goHBp.y);
         }
-                 if (controller.velocity.x == 0 && controller.velocity.y == 1)
+        if (controller.velocity.x == 0 && controller.velocity.y == 1)
         {
             moveTo = new Vector2(goHBp.x, goHBp.y + nodePos.y);
         }
-                 if (controller.velocity.x == 0 && controller.velocity.y == -1)
+        if (controller.velocity.x == 0 && controller.velocity.y == -1)
         {
             moveTo = new Vector2(goHBp.x, goHBp.y - nodePos.y);
         }
 
-       // gameObject.transform.position = node.GetComponent<BoxCollider2D>().transform.position;
+        // gameObject.transform.position = node.GetComponent<BoxCollider2D>().transform.position;
         nextMoveDirection = node.GetRandomTraversibleVector(controller.velocity);
-        
+
     }
 
     void FixedUpdate()
-<<<<<<< HEAD
     {
         if (paused)
         {
@@ -118,11 +114,9 @@ public class AITest : MonoBehaviour {
             return;
         }
         controller.velocity = moveDirection;
-=======
-    {
+        {
             controller.velocity = moveDirection;
 
->>>>>>> a5175c4ba8aafafe6b3c75e67ccfb6a46120875c
+        }
     }
-
 }

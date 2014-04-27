@@ -47,7 +47,6 @@ public class TextScroller : MonoBehaviour {
                     gText.text = substring;
                     isRunning = false;
                     GameObject.FindGameObjectWithTag("Main").audio.volume = 0.5f;
-                    //GameObject.FindGameObjectWithTag("GUI").GetComponent<Animator>().StopPlayback();
                     return;
                 }
                 substring = text.Substring(0, currentIndex);

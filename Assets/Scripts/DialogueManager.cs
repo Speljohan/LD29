@@ -77,10 +77,18 @@ public class DialogueManager : MonoBehaviour {
         mugshot_r.sortingOrder = 4;
         mugshot_r.transform.localScale = new Vector3(0.4f, 0.4f, 1);
         cam.transform.localPosition = new Vector3(-7f, -3f, 0f);
-
-        mugshot_animator = cam.AddComponent<Animator>();
-        mugshot_animator.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("Sprites/changeMan_0");
-        mugshot_animator.Play("TestAni");
+        if (currentConversation == 0)
+        {
+            mugshot_r.enabled = true;
+            mugshot_animator = cam.AddComponent<Animator>();
+            mugshot_animator.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("Sprites/changeMan_1");
+            mugshot_animator.Play("Bum_mugshot");
+        }
+        else
+        {
+            mugshot_r.enabled = false;
+            mugshot_animator.enabled = false;
+        }
 
         audio = gui.AddComponent<AudioSource>();
         audio.clip = Resources.Load<AudioClip>("Sound/conversation_noise");
@@ -88,9 +96,9 @@ public class DialogueManager : MonoBehaviour {
 
     public void Destroy()
     {
-        target.GetComponent<AITest>().BroadcastMessage("Resume");
         gui.SetActive(false);
         GameObject.FindGameObjectWithTag("GUI").SetActive(false);
+        target.GetComponent<AITest>().BroadcastMessage("Resume");
 
         isRunning = false;
     }
@@ -98,7 +106,17 @@ public class DialogueManager : MonoBehaviour {
     public void RenderNextFrame()
     {
         textScroller.SetText(conversation.lines[currentConversation], text);
-        mugshot_r.sprite = conversation.mugshots[currentConversation];
+        if (currentConversation == 0)
+        {
+            mugshot_r.enabled = true;
+            mugshot_animator.enabled = true;
+            mugshot_r.sprite = conversation.mugshots[currentConversation];
+        }
+        else
+        {
+            mugshot_r.enabled = false;
+            mugshot_animator.enabled = false;
+        }
     }
 
     public static Sprite LoadFromSheet(string path, string name)

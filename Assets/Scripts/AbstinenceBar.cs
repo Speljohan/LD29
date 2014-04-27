@@ -8,7 +8,7 @@ public class AbstinenceBar : MonoBehaviour {
     Vector3 veco;
 	// Use this for initialization
 	void Start () {
-        veco = new Vector3(curSize, 1f, 1f);
+        veco = new Vector3(curSize, 5f, 1f);
           ab.transform.localScale = veco;
 	}
 	
@@ -19,7 +19,7 @@ public class AbstinenceBar : MonoBehaviour {
         {
             curSize = 0.001f;
         }
-      Vector3 veco = new Vector3(curSize, 1f, 1f);
+      Vector3 veco = new Vector3(curSize, 5f, 1f);
       ab.transform.localScale = veco;
 	}
 }

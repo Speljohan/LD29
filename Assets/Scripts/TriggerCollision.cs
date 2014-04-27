@@ -8,10 +8,10 @@ public class TriggerCollision : MonoBehaviour {
 	
 	}
 
-    void OnTriggerEnter(Collider target)
+    /*void OnTriggerEnter(Collider target)
     {
         target.gameObject.BroadcastMessage("NewTarget");
-    }
+    }*/
 	
 	// Update is called once per frame
 	void Update () {

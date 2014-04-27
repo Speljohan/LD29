@@ -25,8 +25,6 @@ public class AI : MonoBehaviour {
         int targetNode = Random.Range(0, nodes.Count);
         this.destination = DirToVector(NextNode(nodes[targetNode].GetComponent<NodeRule>())).normalized;
         this.transform.position = destination;
-        
-
 
     }
 

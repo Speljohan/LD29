@@ -5,59 +5,64 @@ public class AITest : MonoBehaviour {
 
     private Rigidbody2D controller;
     public Vector2 speed = new Vector2(1,1);
-    public Vector2 moveTo = new Vector2(0, 0);
+    private Vector2 moveTo = new Vector2(0, 0);
 	// Use this for initialization
-    private Vector2 moveDirection = new Vector2(1, 0);
+    public Vector2 moveDirection = new Vector2(1, 0);
     private Vector2 nextMoveDirection = new Vector2(0, 0);
+    private bool paused = false;
+    private bool hasTouchedNode = false;
 	void Start () {
         this.controller = GetComponent<Rigidbody2D>();
         controller.gravityScale = 0;
         moveDirection = new Vector2(1, 0);
-    
+        print(moveDirection.x);
         
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        
+        print("Hai, AIM A AITEST");
        // print("OIL");
-        Vector2 goPos = gameObject.GetComponent<BoxCollider2D>().transform.position;
-        if (controller.velocity.x == 1 && controller.velocity.y == 0)
+        if (hasTouchedNode)
         {
-            if (goPos.x >= moveTo.x)
+            Vector2 goPos = gameObject.GetComponent<BoxCollider2D>().transform.position;
+            if (controller.velocity.x == 1 && controller.velocity.y == 0)
             {
-                moveDirection = nextMoveDirection;
-                print("IM MOVING YO");
+                if (goPos.x >= moveTo.x)
+                {
+                    moveDirection = nextMoveDirection;
+                    print("IM MOVING YO");
+                }
             }
-        }
-        if (controller.velocity.x == -1 && controller.velocity.y == 0)
-        {
-            if (goPos.x <= moveTo.x)
+            if (controller.velocity.x == -1 && controller.velocity.y == 0)
             {
-                moveDirection = nextMoveDirection;
+                if (goPos.x <= moveTo.x)
+                {
+                    moveDirection = nextMoveDirection;
+                }
             }
-        }
-        if (controller.velocity.x == 0 && controller.velocity.y == 1)
-        {
-            if (goPos.y >= moveTo.y)
+            if (controller.velocity.x == 0 && controller.velocity.y == 1)
             {
-                moveDirection = nextMoveDirection;
+                if (goPos.y >= moveTo.y)
+                {
+                    moveDirection = nextMoveDirection;
+                }
             }
-        }
-        if (controller.velocity.x == 0 && controller.velocity.y == -1)
-        {
-            if (goPos.y <= moveTo.y)
+            if (controller.velocity.x == 0 && controller.velocity.y == -1)
             {
-                moveDirection = nextMoveDirection;
+                if (goPos.y <= moveTo.y)
+                {
+                    moveDirection = nextMoveDirection;
+                }
             }
+
         }
-        
-        
 	
 	}
 
     void OnTriggerEnter2D(Collider2D otherCollider)
     {
+        hasTouchedNode = true;
         print("WE HIT OIL!");
 
         NodeRule node = otherCollider.gameObject.GetComponent<NodeRule>();
@@ -88,7 +93,8 @@ public class AITest : MonoBehaviour {
 
     void FixedUpdate()
     {
-        controller.velocity = moveDirection;
+            controller.velocity = moveDirection;
+
     }
 
 }

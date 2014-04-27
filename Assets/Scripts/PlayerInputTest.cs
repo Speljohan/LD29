@@ -34,8 +34,7 @@ public class PlayerInputTest : MonoBehaviour {
             if (this.activeObject != null)
             {
                 activeObject.GetComponent<AITest>().BroadcastMessage("Pause");
-                DialogueConversation d = new DialogueConversation().Add("Got some spare change?", DialogueManager.LoadFromSheet("Sprites/character_0", "dialogue_background"));
-                GameObject.FindGameObjectWithTag("Main").GetComponent<DialogueManager>().StartDialogue(d, activeObject);    
+                GameObject.FindGameObjectWithTag("Main").GetComponent<DialogueManager>().StartDialogue(DialogueGenerator.GeneratePositive(), activeObject);    
             }
         }
 		float x = Input.GetAxis("Horizontal") * moveSpeed * Time.deltaTime;

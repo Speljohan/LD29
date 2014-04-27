@@ -29,9 +29,14 @@ public class PlayerInputTest : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         if (main.GetComponent<DialogueManager>().IsInDialogue()) return;
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            //Debug.Log("Active!!" + this.activeObject);
+            if (this.activeObject != null)
+            {
+                activeObject.GetComponent<AITest>().BroadcastMessage("Pause");
+                DialogueConversation d = new DialogueConversation().Add("Got some spare change?", DialogueManager.LoadFromSheet("Sprites/character_0", "dialogue_background"));
+                GameObject.FindGameObjectWithTag("Main").GetComponent<DialogueManager>().StartDialogue(d, activeObject);    
+            }
         }
 		float x = Input.GetAxis("Horizontal") * moveSpeed * Time.deltaTime;
 		float y = Input.GetAxis("Vertical") * moveSpeed * Time.deltaTime;

@@ -3,13 +3,16 @@ using System.Collections;
 
 public class AbstinenceBar : MonoBehaviour {
 
-    public GameObject ab;
-    float curSize = 1f;
+    float curSize = 5f;
     Vector3 veco;
+    public Vector3 origin;
+    public GameObject owner;
 	// Use this for initialization
+
 	void Start () {
         veco = new Vector3(curSize, 5f, 1f);
-          ab.transform.localScale = veco;
+        gameObject.transform.localScale = veco;
+        
 	}
 	
 	// Update is called once per frame
@@ -20,6 +23,6 @@ public class AbstinenceBar : MonoBehaviour {
             curSize = 0.001f;
         }
       Vector3 veco = new Vector3(curSize, 5f, 1f);
-      ab.transform.localScale = veco;
+      gameObject.transform.localScale = veco;
 	}
 }

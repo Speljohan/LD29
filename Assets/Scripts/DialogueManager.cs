@@ -15,11 +15,16 @@ public class DialogueManager : MonoBehaviour {
     private SpriteRenderer mugshot_r;
     private Animator mugshot_animator;
     private AudioSource audio;
+    private GameObject cam;
+    private GameObject target;
+
+    private bool initialised;
 
 	// Use this for initialization
 
 	void Start () {
         isRunning = false;
+        initialised = false;
 	}
 
     public bool IsInDialogue()
@@ -27,10 +32,18 @@ public class DialogueManager : MonoBehaviour {
         return isRunning;
     }
 
-    public void StartDialogue(DialogueConversation conversation)
+    public void StartDialogue(DialogueConversation conversation, GameObject target)
     {
+        this.target = target;
         this.conversation = conversation;
-        Init();
+        currentConversation = 0;
+        if (!initialised)
+        {
+            Init();
+            initialised = true;
+        }
+        gui.SetActive(true);
+        cam.SetActive(true);
         RenderNextFrame();
         isRunning = true;
     }
@@ -47,7 +60,7 @@ public class DialogueManager : MonoBehaviour {
 
         textScroller = gui.AddComponent<TextScroller>();
 
-        GameObject cam = GameObject.FindGameObjectWithTag("GUI");
+        cam = GameObject.FindGameObjectWithTag("GUI");
 
         background = new GameObject("background");
         background.transform.parent = cam.transform;
@@ -75,11 +88,10 @@ public class DialogueManager : MonoBehaviour {
 
     public void Destroy()
     {
-        Destroy(gui);
-        Destroy(text);
-        Destroy(background);
-        Destroy(mugshot_r);
-        Destroy(audio);
+        target.GetComponent<AITest>().BroadcastMessage("Resume");
+        gui.SetActive(false);
+        GameObject.FindGameObjectWithTag("GUI").SetActive(false);
+
         isRunning = false;
     }
 

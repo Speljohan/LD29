@@ -9,6 +9,7 @@ public class AITest : MonoBehaviour {
 	// Use this for initialization
     private Vector2 moveDirection = new Vector2(1, 0);
     private Vector2 nextMoveDirection = new Vector2(0, 0);
+    private bool paused;
 	void Start () {
         this.controller = GetComponent<Rigidbody2D>();
         controller.gravityScale = 0;
@@ -16,6 +17,18 @@ public class AITest : MonoBehaviour {
     
         
 	}
+
+    public void Pause()
+    {
+        paused = true;
+    }
+
+    public void Resume()
+    {
+        paused = false;
+    }
+
+
 	
 	// Update is called once per frame
 	void Update () {
@@ -88,6 +101,11 @@ public class AITest : MonoBehaviour {
 
     void FixedUpdate()
     {
+        if (paused)
+        {
+            controller.velocity = Vector2.zero;
+            return;
+        }
         controller.velocity = moveDirection;
     }
 

@@ -37,7 +37,6 @@ public class TextScroller : MonoBehaviour {
         if (isRunning)
         {
             currentTime += Time.deltaTime;
-            Debug.Log(currentTime);
             if (currentTime >= scrollInterval)
             {
                 currentIndex++;

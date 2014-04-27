@@ -8,15 +8,15 @@ public class Main : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        CreateRandomNpc();
-        Sprite s = Resources.Load<Sprite>("Sprites/changeMan");
+        //CreateRandomNpc();
+        //Sprite s = Resources.Load<Sprite>("Sprites/changeMan");
 
-        DialogueConversation d = new DialogueConversation().Add("Hai der!", s).
-            Add("Why won't anyone communicate with me? :(", s).
+        /*DialogueConversation d = new DialogueConversation().Add("Hai der!", s).
+            Add("Why won't anyone communicate with me? =( ", s).
             Add("Stop being so mean!", s).
             Add("I'll tell my mom on you!", s);
 
-        GetComponent<DialogueManager>().StartDialogue(d);
+        GetComponent<DialogueManager>().StartDialogue(d);*/
         
 	}
 
@@ -33,5 +33,12 @@ public class Main : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
+        if (Input.GetKeyDown(KeyCode.LeftControl))
+        {
+            GameObject obj = GameObject.FindGameObjectWithTag("GUI");
+            PopupMessage msg = obj.AddComponent<PopupMessage>();
+            msg.SetMessage(0, 0, "FOO", Color.red, 500, 0.1f);
+        }
 	}
 }
